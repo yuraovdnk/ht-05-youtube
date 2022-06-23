@@ -42,6 +42,7 @@ export const RegistrationValidator = [
         const res = await usersCollection.findOne({"accountData.email":value})
         if(res) return Promise.reject()
     }).withMessage("user with such email is exist "),
+
     passwordValidator,
     errorsValidation
 ]

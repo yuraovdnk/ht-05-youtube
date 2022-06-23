@@ -6,7 +6,7 @@ export const checkIp = async (req: Request, res: Response, next: NextFunction) =
 
     const ipQuery = {
         ip: req.ip,
-        endpoint: req.url,
+        endpoint: req.baseUrl + req.path,
         date: new Date()
     }
     await ipAddressesCollection.insertOne(ipQuery)
@@ -17,7 +17,7 @@ export const checkIp = async (req: Request, res: Response, next: NextFunction) =
     const count = await ipAddressesCollection.countDocuments({
         ip: ipQuery.ip,
         endpoint: ipQuery.endpoint,
-        date: {$gt: pastDate, $lt: currentDate}
+        date: {$gte: pastDate, $lte: currentDate}
     })
     console.log(count)
     await ipAddressesCollection.deleteMany({

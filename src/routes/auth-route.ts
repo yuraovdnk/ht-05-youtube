@@ -8,7 +8,7 @@ import {
     LoginValidator,
     RegistrationValidator
 } from "../middlewares/validators/auth-validator";
-import {usersRepository} from "../repositories/users-repository";
+
 
 
 export const authRoute = Router()
