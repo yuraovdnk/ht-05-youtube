@@ -17,7 +17,7 @@ testingRoute.delete('/all-data',async (req: Request, res: Response)=>{
         await usersCollection.deleteMany({})
         await commentsCollection.deleteMany({})
         await ipAddressesCollection.deleteMany({})
-        res.sendStatus(200)
+        res.sendStatus(204)
     }
     catch (e){
         console.log(e)

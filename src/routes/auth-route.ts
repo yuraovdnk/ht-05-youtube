@@ -16,7 +16,7 @@ export const authRoute = Router()
 authRoute.post('/registration',checkIp,RegistrationValidator,async (req: Request, res: Response)=>{
     const newUser = await authService.createUser(req.body.login,req.body.email,req.body.password)
     if(newUser){
-        res.status(204).send(newUser)
+        res.status(204).send("Email with confirmation code will be send to passed email address")
         return
     }
     res.sendStatus(400)
