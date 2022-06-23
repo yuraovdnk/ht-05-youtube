@@ -31,6 +31,7 @@ export const authService = {
         try {
              await emailManager.sendConfirmMail(newUser)
         } catch (e) {
+
             await usersRepository.deleteUser(newUser.id)
             return false
         }
