@@ -10,10 +10,6 @@ import {usersCollection} from "../repositories/db";
 
 export const authService = {
     async createUser(login: string, email: string, password: string): Promise<UserTypeRes | boolean> {
-        const candidate = await usersRepository.findByLoginOrEmail(login,email)
-        if (candidate) {
-            return false
-        }
         const passwordHash = await this.generateHash(password)
         const newUser = {
             id: new ObjectId(),
