@@ -25,6 +25,7 @@ authRoute.post('/registration',checkIp,RegistrationValidator,async (req: Request
 })
 
 authRoute.post('/registration-confirmation',checkIp,ConfirmEmailValidator,async (req: Request, res: Response)=>{
+    console.log(req.body.code)
     const resultConfirmation = await authService.confirmEmail(req.body.code)
     if(resultConfirmation){
         res.sendStatus(204)
