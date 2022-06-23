@@ -14,7 +14,7 @@ export const emailAdapter = {
             from: '"Yura" <yuraovdnk@gmail.com>',
             to: user.accountData.email ,
             subject: "Confrim Email",
-            text: `${process.env.CLIENT_URL}/auth/registration-confirmation/?code=${user.emailConfirmation.confirmationCode}`
+            text: `${user.emailConfirmation.confirmationCode}`
         })
        return info
     }
