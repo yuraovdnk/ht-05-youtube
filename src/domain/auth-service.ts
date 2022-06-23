@@ -9,8 +9,8 @@ import {usersCollection} from "../repositories/db";
 
 
 export const authService = {
-    async createUser(login: string, email: string, password: string): Promise<UserTypeRes | boolean | null> {
-        const candidate = await usersRepository.findByLogin(login)
+    async createUser(login: string, email: string, password: string): Promise<UserTypeRes | boolean> {
+        const candidate = await usersRepository.findByLoginOrEmail(login,email)
         if (candidate) {
             return false
         }
@@ -35,12 +35,10 @@ export const authService = {
         try {
             await emailManager.sendConfirmMail(newUser)
         } catch (e) {
-            console.error(e)
             await usersRepository.deleteUser(newUser.id)
-            return null
+            return false
         }
         return resultCreated
-
     },
 
     async confirmEmail(code: string):Promise<boolean> {
@@ -74,7 +72,8 @@ export const authService = {
     },
 
     async checkCredentials(login: string, password: string):Promise<UserType | null> {
-        const candidate = await usersRepository.findByLogin(login)
+        const candidate = await usersRepository.findByLoginOrEmail(login)
+
         if (!candidate) {
             return null
         }
