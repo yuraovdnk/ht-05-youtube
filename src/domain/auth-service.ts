@@ -5,7 +5,6 @@ import {uuid} from "uuidv4";
 import {add} from 'date-fns'
 import {emailManager} from "../managers/email-manager";
 import {usersRepository} from "../repositories/users-repository";
-import {usersCollection} from "../repositories/db";
 
 
 export const authService = {
@@ -38,10 +37,7 @@ export const authService = {
         return resultCreated
     },
 
-    async   confirmEmail(code: string):Promise<boolean> {
-        const user = await usersRepository.findByConfirmCode(code)
-
-        if (!user) return false
+    async confirmEmail(user: UserType,code: string):Promise<boolean> {
 
         if (user.emailConfirmation.isConfirmed) return false
 
@@ -53,14 +49,13 @@ export const authService = {
 
     },
 
-    async resendEmail(email:string):Promise<boolean | null>{
-        const user = await usersCollection.findOne({"accountData.email":email})
-        if(!user) return false
-
+    async resendEmail(user:UserType):Promise<boolean | null>{
         if(user.emailConfirmation.isConfirmed) return false
-
+        const newConfirmCode = uuid()
+        await usersRepository.updateCode(user.id,newConfirmCode)
+        const userWithUpdated = await usersRepository.findByConfirmCode(newConfirmCode)
         try {
-            await emailManager.sendConfirmMail(user)
+            await emailManager.sendConfirmMail(userWithUpdated!)
             return true
         }
         catch (e){
@@ -70,6 +65,7 @@ export const authService = {
     async findByLogin(login:string):Promise<UserType | null>{
         return await usersRepository.findByLogin(login)
     },
+
     async findByEmail(email:string):Promise<UserType | null>{
         return await usersRepository.findByEmail(email)
     },
@@ -93,4 +89,8 @@ export const authService = {
         const hash = await bcrypt.hash(password, 10)
         return hash
     },
+
+    async finUserByCode(code:string):Promise<UserType | null>{
+        return await usersRepository.findByConfirmCode(code)
+    }
 }

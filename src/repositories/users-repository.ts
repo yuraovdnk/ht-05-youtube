@@ -14,7 +14,6 @@ export const usersRepository = {
         const filter = {}
         const options = {id:1,"accountData.login":1}
         const users = await pagination(query, filter, usersCollection, options)
-        //return users.map()
         return users
     },
 
@@ -39,8 +38,12 @@ export const usersRepository = {
         return await usersCollection.findOne({"emailConfirmation.confirmationCode":code})
     },
 
-    async  updateConfirm(id:ObjectId):Promise<boolean>{
+    async updateConfirm(id:ObjectId):Promise<boolean>{
         const res = await usersCollection.updateOne({id},{$set:{"emailConfirmation.isConfirmed":true}})
+        return res.acknowledged
+    },
+    async updateCode(id:ObjectId,code:string):Promise<boolean>{
+        const res = await usersCollection.updateOne({id},{$set:{"emailConfirmation.confirmationCode":code}})
         return res.acknowledged
     }
 
