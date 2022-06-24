@@ -36,7 +36,7 @@ authRoute.post('/registration-confirmation', checkIp, ConfirmEmailValidator, asy
         res.sendStatus(204)
         return
     }
-    res.status(400)
+    res.status(400).send(errorsGenerator("Something wrong with field email","email"))
 })
 
 authRoute.post('/registration-email-resending', checkIp, EmailResendValidator, async (req: Request, res: Response) => {
@@ -49,7 +49,7 @@ authRoute.post('/registration-email-resending', checkIp, EmailResendValidator, a
         res.sendStatus(204)
         return
     }
-    res.sendStatus(400)
+    res.status(400).send(errorsGenerator("is confirmed","email"))
 })
 
 authRoute.post('/login', checkIp, LoginValidator, async (req: Request, res: Response) => {

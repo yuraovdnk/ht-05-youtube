@@ -92,7 +92,7 @@ postsRoute.delete('/:id',basicAuth,idValidate,async (req: Request, res: Response
 
 })
 ///comments
-postsRoute.post('/:postId/comments',bearerAuth,idValidate,commentValidation,async (req: Request, res: Response)=>{
+postsRoute.post('/:postId/comments',bearerAuth,commentValidation,idValidate,async (req: Request, res: Response)=>{
     const existPost = await postsService.getPostById(new ObjectId(req.params.postId))
     if(existPost){
         const createPost = await postsService.createComment(new ObjectId(req.params.postId),req.body.content, req.user!)
