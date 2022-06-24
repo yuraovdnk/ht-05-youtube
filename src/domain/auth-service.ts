@@ -67,9 +67,14 @@ export const authService = {
             return null
         }
     },
-
+    async findByLogin(login:string):Promise<UserType | null>{
+        return await usersRepository.findByLogin(login)
+    },
+    async findByEmail(email:string):Promise<UserType | null>{
+        return await usersRepository.findByEmail(email)
+    },
     async checkCredentials(login: string, password: string):Promise<UserType | null> {
-        const candidate = await usersRepository.findByLoginOrEmail(login)
+        const candidate = await usersRepository.findByLogin(login)
 
         if (!candidate) {
             return null

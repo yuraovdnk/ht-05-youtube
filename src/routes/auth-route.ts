@@ -8,13 +8,14 @@ import {
     LoginValidator,
     RegistrationValidator
 } from "../middlewares/validators/auth-validator";
+import {existUser} from "../middlewares/validators/exist-user";
 
 
 
 export const authRoute = Router()
 
 
-authRoute.post('/registration',checkIp,RegistrationValidator,async (req: Request, res: Response)=>{
+authRoute.post('/registration',checkIp,RegistrationValidator,existUser,async (req: Request, res: Response)=>{
 
     const newUser = await authService.createUser(req.body.login,req.body.email,req.body.password)
     if(newUser){

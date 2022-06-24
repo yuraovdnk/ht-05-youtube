@@ -1,4 +1,4 @@
-import {body} from "express-validator";
+import {body, check} from "express-validator";
 import {errorsValidation} from "./validation-errors";
 import {usersCollection} from "../../repositories/db";
 
@@ -25,6 +25,7 @@ export const confirmCodeValidator = body('code')
     .exists().withMessage('The code field is required.')
     .isString().withMessage('The code field must be string')
     .notEmpty().withMessage("code must be not empty")
+
 
 export const LoginValidator = [
     loginValidator,
