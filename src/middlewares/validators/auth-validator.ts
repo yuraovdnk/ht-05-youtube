@@ -32,17 +32,8 @@ export const LoginValidator = [
     errorsValidation
 ]
 export const RegistrationValidator = [
-
-    loginValidator.custom(async value =>{
-        const res = await usersCollection.findOne({"accountData.login":value})
-        if(res) return Promise.reject()
-    }).withMessage("user with such login is exist "),
-
-    emailValidator.custom(async value =>{
-        const res = await usersCollection.findOne({"accountData.email":value})
-        if(res) return Promise.reject()
-    }).withMessage("user with such email is exist "),
-
+    loginValidator,
+    emailValidator,
     passwordValidator,
     errorsValidation
 ]

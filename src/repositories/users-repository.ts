@@ -35,7 +35,7 @@ export const usersRepository = {
         return await usersCollection.findOne({"emailConfirmation.confirmationCode":code})
     },
 
-    async updateConfirm(id:ObjectId):Promise<boolean>{
+    async  updateConfirm(id:ObjectId):Promise<boolean>{
         const res = await usersCollection.updateOne({id},{$set:{"emailConfirmation.isConfirmed":true}})
         return res.acknowledged
     }
