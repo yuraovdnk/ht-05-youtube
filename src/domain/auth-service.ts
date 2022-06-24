@@ -38,7 +38,7 @@ export const authService = {
         return resultCreated
     },
 
-    async confirmEmail(code: string):Promise<boolean> {
+    async   confirmEmail(code: string):Promise<boolean> {
         const user = await usersRepository.findByConfirmCode(code)
 
         if (!user) return false
