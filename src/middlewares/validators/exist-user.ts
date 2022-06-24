@@ -10,7 +10,7 @@ export const existUser = async (req: Request, res: Response, next: NextFunction)
         field = 'login'
         message = 'Login is exist'
     }
-    const findByEmail = await authService.findByLogin(req.body.email)
+    const findByEmail = await authService.findByEmail(req.body.email)
     if (findByEmail) {
         field = 'email'
         message = 'email is exist'
